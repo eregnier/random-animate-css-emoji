@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+    <script src="ananas.js"></script>
+    <script src="emojis.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <img
+            class="animated infinite"
+            :class="animation.effect"
+            v-for="animation in animations"
+            width="100px"
+            height="100px"
+            :src="animation.emoji"/>
+    </div>
+
+    <script>
+    new Vue({
+      el: '#app',
+      computed: {
+          animations () {
+            var animator = [];
+            var effects = this.shuffle(window.effects);
+            var emojis = this.shuffle(window.emojis);
+            for (var i=0; i<effects.length; i++) {
+                animator.push({
+                    effect : effects[parseInt(Math.random() * effects.length)],
+                    emoji: 'http://twitter.github.io/twemoji/svg/' + emojis[i]
+                });
+            }
+            return animator;
+          }
+      },
+      methods: {
+        shuffle (o) {
+          for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+          return o;
+        }
+      }
+    })
+    </script>
+</body>
+</html>
